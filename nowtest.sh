@@ -151,12 +151,12 @@ curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtes
 cd nowtest
 chmod +x ./speedtest
 printf "%-18s %-18s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "单线程上传" "延迟"
-speedtest '24447'
-speedtest '39012'
-speedtest '3633'
-speedtest '27249'
-speedtest '35722'
-speedtest '17584'
-speedtest '29071'
+speed_test '24447'
+speed_test '39012'
+speed_test '3633'
+speed_test '27249'
+speed_test '35722'
+speed_test '17584'
+speed_test '29071'
 fi
 
