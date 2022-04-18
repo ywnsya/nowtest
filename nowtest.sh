@@ -132,9 +132,11 @@ then
 echo 'Installing Speedtest-cli-python by sivel(https://github.com/sivel/speedtest-cli/)'
 echo 'Now installing python'
 $pkg -y install python3
+ ln -s /usr/bin/python3 /usr/bin/python
 mkdir nowtest
 curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/speedtest.py" -o nowtest/speedtest
 cd nowtest
 chmod +x ./speedtest
+
 fi
 
