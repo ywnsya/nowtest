@@ -4,7 +4,7 @@ pkg='yum'
 type yum
 if [ $? == '1' ]
 then
-pkg='deb'
+pkg='apt'
 fi
 #try curl
 type curl
@@ -106,6 +106,35 @@ fi
 
 if [ $todo == '2' ]
 then
-echo 'Installing Speedtest-cli by ookla'
-echo 'Downloading Speedtest-cli From coding.net Git repo'
+
+#官方speedtest不支持单线程
+#echo 'Installing Speedtest-cli by ookla'
+#echo 'Downloading Speedtest-cli From coding.net Git repo'
+#get_arch=`arch`
+#if [[ $get_arch =~ "x86_64" ]];then
+#arch='amd64';
+#elif [[ $get_arch =~ "aarch64" ]];then
+#arch='arm64';
+#elif [[ $get_arch =~ "i386" ]];then
+#arch='i386';
+#else
+#    echo "Unknow ARCH, choose amd64 by default"
+#    arch='amd64'
+#fi
+#echo "Download form https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/$arch/speedtestcli.tgz"
+#mkdir nowtest
+#curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/$arch/speedtestcli.tgz" -o nowtest/speedtest.tgz
+#$pkg install tar
+#cd nowtest
+#tar -zxvf speedtest.tgz
+#chmod +x ./speedtest
+#使用python版本 https://github.com/sivel/speedtest-cli/
+echo 'Installing Speedtest-cli-python by sivel(https://github.com/sivel/speedtest-cli/)'
+echo 'Now installing python'
+$pkg -y install python3
+mkdir nowtest
+curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/speedtest.py" -o nowtest/speedtest
+cd nowtest
+chmod +x ./speedtest
+fi
 
