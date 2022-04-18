@@ -1,4 +1,16 @@
 #!/bin/bash
+speed_test(){
+speedlog=''
+speedlog=$(./speedtest --server $1 --csv --csv-delimiter Q)
+singlespeed=$(./speedtest --single --server $1 --csv --csv-delimiter Q)
+name=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[2]}' )
+download=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[7]}' )
+upload=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[8]}' )
+ping=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[6]}' )
+singleupload=$(echo $singlespeed |  awk '{split($1, arr, "Q"); print arr[8]}' )
+printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$download" "$upload" "$singleupload" "$ping"
+}
+
 #try yum/apt
 pkg='yum'
 type yum
@@ -14,6 +26,7 @@ $pkg -y install curl
 fi
 version='1.0.1';
 nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
+
 echo "
 ____________________________________
 |                                   |
@@ -137,6 +150,7 @@ mkdir nowtest
 curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/speedtest.py" -o nowtest/speedtest
 cd nowtest
 chmod +x ./speedtest
-
+printf "%-18s %-18s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "单线程上传" "延迟"
+speedtest '3633'
 fi
 

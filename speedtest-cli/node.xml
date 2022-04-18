@@ -2,5 +2,11 @@
 <settings>
 <servers>
 <server url="http://5g.shunicomtest.com:8080/speedtest/upload.php" lat="1.2000" lon="1.5000" name="ShangHai" country="China" cc="CN" sponsor="CU Shanghai 5G" id="24447"  host="5g.shunicomtest.com:8080" />
+<server url="http://speedtest.yncun.net:8080/speedtest/upload.php" lat="24.8801" lon="102.8329" name="KunMing" country="China" cc="CN" sponsor="ChinaUnicom YunNan" id="39012" host="speedtest.yncun.net:8080" />
+<server url="http://speedtest1.online.sh.cn:8080/speedtest/upload.php" lat="31.2000" lon="121.5000" name="Shanghai" country="China" cc="CN" sponsor="CT Shanghai" id="3633"  host="speedtest1.online.sh.cn:8080" />
+<server url="http://owa.eastcom-sw.com:8080/speedtest/upload.php" lat="32.0602" lon="118.7968" name="Nanjing" country="China" cc="CN" sponsor="CM jiangsu 5G" id="27249" host="owa.eastcom-sw.com:8080" />
+<server url="http://tjrate.tjtele.com:8080/speedtest/upload.php" lat="39.0189" lon="117.2174" name="TianJin" country="China" cc="CN" sponsor="CT TianJin" id="35722" host="tjrate.tjtele.com:8080" />
+<server url="http://speedtest2.cq.chinamobile.com:8080/speedtest/upload.php" lat="29.5583" lon="106.5667" name="Chongqing" country="China" cc="CN" sponsor="CM Chongqing" id="17584" host="speedtest2.cq.chinamobile.com:8080" />
+ <server url="http://speedtest1.sc.189.cn:8080/speedtest/upload.php" lat="30.6634" lon="104.0723" name="成都" country="China" cc="CN" sponsor="CT Chengdu" id="29071" host="speedtest1.sc.189.cn:8080" />
 </servers>
 </settings>
