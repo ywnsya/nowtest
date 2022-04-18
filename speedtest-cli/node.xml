@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+<servers>
+<server url="http://5g.shunicomtest.com:8080/speedtest/upload.php" lat="1.2000" lon="1.5000" name="ShangHai" country="China" cc="CN" sponsor="CU Shanghai 5G" id="24447"  host="5g.shunicomtest.com:8080" />
+</servers>
+</settings>
