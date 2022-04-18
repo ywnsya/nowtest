@@ -27,11 +27,10 @@ ____________________________________
 Menu:
 序号     测试项目               |       快捷指令          |          说明
 1. Basic INFO   基础信息检查    |  ./nowtest info        |
-2. Benchmark    CPU跑分        |  ./nowtest benchmark   | 
-3. SpeedTEST    网络测速        |  ./nowtest speedtest   |
-4. RAM-TEST     内存测速       |  ./nowtest ramtest      | At least 256Mb memory is required 至少256Mb内存
-5. RAM-limit    内存极限测速    | ./nowtest ramlimit     |Prudent use 慎重使用
-6. Traceroute(CN)中国方向路由追踪| ./nowtest traceroute   | 
+2. SpeedTEST    网络测速        |  ./nowtest speedtest   |
+3. RAM-TEST     内存测速       |  ./nowtest ramtest      | At least 256Mb memory is required 至少256Mb内存
+4. RAM-limit    内存极限测速    | ./nowtest ramlimit     |Prudent use 慎重使用
+5. Traceroute(CN)中国方向路由追踪| ./nowtest traceroute   | 
 
 Type the serial number to select
 输入序号选择测试内容
@@ -105,11 +104,8 @@ ISP                        $isp
 "
 fi
 
-if [ $todo == '1' ]
+if [ $todo == '2' ]
 then
-echo 'Notice 跑分说明:
-算法：
-CPU
-1. 30秒 (($RANDOM + $RANDOM) * $RANDOM)/$RANDOM) 随机数运算
-2. 
-'
+echo 'Installing Speedtest-cli by ookla'
+echo 'Downloading Speedtest-cli From coding.net Git repo'
+
