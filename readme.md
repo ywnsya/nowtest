@@ -10,6 +10,13 @@ curl -fL "https://laysense-generic.pkg.coding.net/nowtest/nowtest/nowtest.sh" -o
 chmod +x ./nowtest.sh
 ./nowtest.sh
 ```  
+由于coding制品库默认禁止了部分国外IP访问(显示403),如果出现403错误请尝试
+```bash
+curl -fL "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/nowtest.sh" -o nowtest.sh
+chmod +x ./nowtest.sh
+./nowtest.sh
+``` 
+
 
 Use it 使用方式 :  
 ```bash
