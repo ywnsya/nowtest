@@ -4,9 +4,9 @@
 version: 1.0.4
 
 [Website](https://laysense.com/nowtest)  
-[Wiki](https://laysense.coding.net/s/8bf42616-c20a-4e7f-a726-4b1c5865049d)
-[coding REPO (Main)](https://laysense.coding.net/public/nowtest/nowtest/git/files)
-[github REPO](https://github.com/ywnsya/nowtest)
+[Wiki](https://laysense.coding.net/s/8bf42616-c20a-4e7f-a726-4b1c5865049d)  
+[coding REPO (Main)](https://laysense.coding.net/public/nowtest/nowtest/git/files)  
+[github REPO](https://github.com/ywnsya/nowtest)  
 
 Install 安装方式 :  
 ```bash
