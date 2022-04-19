@@ -8,6 +8,7 @@ Install 安装方式 :
 ```bash
 curl -fL "https://laysense-generic.pkg.coding.net/nowtest/nowtest/nowtest.sh" -o nowtest.sh
 chmod +x ./nowtest.sh
+./nowtest.sh
 ```  
 
 Use it 使用方式 :  

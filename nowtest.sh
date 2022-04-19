@@ -307,7 +307,7 @@ Type the serial number to select
 ";
 
 echo $1
-if [ $? == '1' ]
+if [[ $? == '1' ]]
 then
 read todo
 fi
