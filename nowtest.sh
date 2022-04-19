@@ -156,6 +156,11 @@ if [ $? == '1' ]
 then
 $pkg -y install bc
 fi
+type unzip
+if [ $? == '1' ]
+then
+$pkg -y install unzip
+fi
 
 version='1.0.1';
 nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
@@ -362,7 +367,6 @@ echo "即将下载 BestTrace Form IPIP.net"
 echo "仅支持amd64架构。ARM架构请自行手动测试"
 mkdir nowtest
 curl -L "https://cdn.ipip.net/17mon/besttrace4linux.zip" -o nowtest/besttrace4linux.zip
-$pkg -y install unzip
 cd nowtest
 unzip besttrace4linux.zip
 cd ../
