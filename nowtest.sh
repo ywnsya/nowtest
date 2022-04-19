@@ -133,6 +133,122 @@ if [ $? == '0' ]
 then
 route="$route \n AS137753 JD 京东"
 fi
+echo $traceput | grep AS199524  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS199524  GCORELAB"
+fi
+echo $traceput | grep AS17676  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS17676  BBTEC/Softbank JP  日本软银"
+fi
+echo $traceput | grep AS23959  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS23959   xTom tokyo-JP  东京xTom"
+fi
+echo $traceput | grep AS4785  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS4785   xTom OSK-JP  大阪xTom"
+fi
+echo $traceput | grep AS21859  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS21859   xTom KR  韩国xTom"
+fi
+echo $traceput | grep AS3786  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3786   LG-DACOM KR  韩国LG"
+fi
+echo $traceput | grep AS3786  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3786   LG-DACOM KR  韩国LG"
+fi
+echo $traceput | grep AS3356  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3356 Level3-Parent-LLC US "
+fi
+echo $traceput | grep AS1299  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS1299 twelve99-Telia SE"
+fi
+echo $traceput | grep AS2914  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS2914 NTT US"
+fi
+echo $traceput | grep AS4713  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS4713  OCN-NTT JP"
+fi
+echo $traceput | grep AS174  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS174 COGENTCO US"
+fi
+echo $traceput | grep AS3257  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3257 GTT-BACKBONE US"
+fi
+echo $traceput | grep AS3491  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3491 PCCW Global US 电讯盈科"
+fi
+echo $traceput | grep AS3462  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS3462 HINET CN(TW) 台湾省中华电信"
+fi
+echo $traceput | grep AS9269  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS9269 HKBN CN(HK) 香港宽频"
+fi
+echo $traceput | grep AS36351  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS36351 SoftLayer US"
+fi
+echo $traceput | grep AS4766  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS4766  Korea Telecom KR"
+fi
+echo $traceput | grep AS7473  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS7473  SINGTEL SG "
+fi
+echo $traceput | grep AS6939  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS6939  HE.NET US "
+fi
+echo $traceput | grep AS6939  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS6939  HE.NET US "
+fi
+echo $traceput | grep AS4755  >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS4755 TATACOMM IN "
+fi
+echo $traceput | grep AS6453 >/dev/null 2>&1
+if [ $? == '0' ]
+then
+route="$route \n AS6453 TATACOMM(AMERICA) US "
+fi
+
 route="$route \n _____________________________"
 
 echo -e "$route"
@@ -162,7 +278,7 @@ then
 $pkg -y install unzip
 fi
 
-version='1.0.1';
+version='1.0.4';
 nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
 
 echo "
@@ -182,11 +298,48 @@ Menu:
 3. RAM-TEST     内存测速       |  ./nowtest ramtest      | At least 256Mb memory is required 至少256Mb内存
 4. RAM-limit    内存极限测速    | ./nowtest ramlimit     |Prudent use 慎重使用
 5. Traceroute(CN)中国方向路由追踪| ./nowtest traceroute   | 
+6. Disk-Test    硬盘测试        | ./nowtest disk         |
+                                |                        |
+9. Update       更新脚本        | ./nowtest update        |
 
 Type the serial number to select
 输入序号选择测试内容
 ";
+
+echo $1
+if [ $? == '1' ]
+then
 read todo
+fi
+if [ $1 == 'info' ]
+then
+todo='1'
+fi
+if [ $1 == 'speedtest' ]
+then
+todo='2'
+fi
+if [ $1 == 'ramtest' ]
+then
+todo='3'
+fi
+if [ $1 == 'ramlimit' ]
+then
+todo='4'
+fi
+if [ $1 == 'traceroute' ]
+then
+todo='5'
+fi
+if [ $1 == 'disk' ]
+then
+todo='6'
+fi
+if [ $1 == 'update' ]
+then
+todo='9'
+fi
+
 if [ $todo == '1' ]
 then
 cpuname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
@@ -297,13 +450,17 @@ echo "本脚本将测试单线程上传,因此耗时较长,如服务器用于建
 echo "如出现urlopen error timed out为Speedtest.Net服务器抽风,请稍后再尝试运行"
 echo "CT=中国电信 CU=中国联通 CM=中国移动"
 printf "%-22s %-18s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "单线程上传" "延迟"
+speed_test '3633'
+speed_test '35722'
+speed_test '29071'
+
 speed_test '24447'
 speed_test '39012'
-speed_test '3633'
-speed_test '27249'
-speed_test '35722'
+speed_test '13704'
+
+speed_test '20249'
 speed_test '17584'
-speed_test '29071'
+speed_test '26850'
 cd ../
 fi
 
@@ -376,9 +533,9 @@ echo "全部使用TCP测试,AS库不全,只检测较有特色的骨干网,测试
 echo "上海电信";
 trace '203.156.197.66'
 echo "广东电信";
-trace '14.18.190.181'
+trace '183.56.162.134'
 echo "北京电信";
-trace '103.85.164.1'
+trace '36.112.226.210'
 echo "上海联通";
 trace '219.158.112.225'
 echo "广东联通";
@@ -386,9 +543,65 @@ trace '27.38.199.172'
 echo "北京联通";
 trace '125.33.186.218'
 echo "上海移动";
-trace '203.156.197.66'
+trace '221.183.90.241'
 echo "广东移动";
-trace '120.230.8.153'
+trace '221.179.81.94'
 echo "北京移动";
-trace '223.72.76.106'
+trace '221.183.94.25'
+fi
+
+if [ $todo == '6' ]
+then
+echo "请确保硬盘空间>=1GB,否则立即ctrl+c退出"
+sleep 2s
+echo "512K,1GB顺序写测速(0填充)"
+dd if=/dev/zero of=test_file bs=512K count=2048 oflag=sync oflag=direct
+echo "清除缓存"
+sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+echo "512K,1GB顺序写测速(0填充)"
+dd if=./test_file of=/dev/null bs=512k
+rm -f ./test_file
+sleep 2s
+
+
+echo "512K,1GB顺序写测速(urandom填充)"
+dd if=/dev/urandom of=test_file bs=512K count=2048 oflag=sync oflag=direct
+echo "清除缓存"
+sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+echo "512K,1GB顺序写测速(urandom填充)"
+dd if=./test_file of=/dev/null bs=512k
+rm -f ./test_file
+
+echo "接下来是4K,50MB顺序写测速(urandom填充),机械硬盘将极其缓慢(可能需要两分钟以上),如不需要测试请立即ctrl+c退出"
+sleep 5s
+
+echo "4K,50MB顺序写测速(urandom填充) 【共计12800次IO,您可以更具测试时间判断4k大致IO数】"
+time dd if=/dev/urandom of=test_file bs=4K count=12800 oflag=sync oflag=direct
+echo "清除缓存"
+sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
+echo "4K,50MB顺序写测速(urandom填充)"
+time dd if=./test_file of=/dev/null bs=4K
+rm -f ./test_file
+
+fi
+
+
+
+
+
+
+if [ $todo == '9' ]
+then
+nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
+echo "当前版本 $version  最新版本 $nversion 是否更新？"
+echo "输入 update 以更新"
+read update
+if [ $update == 'update' ]
+then
+rm -f ./nowtest.sh
+curl -fL "https://laysense-generic.pkg.coding.net/nowtest/nowtest/nowtest.sh" -o nowtest.sh
+chmod +x ./nowtest.sh
+echo "更新已完成"
+fi
+./nowtest.sh
 fi
