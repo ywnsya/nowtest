@@ -292,55 +292,56 @@ ____________________________________
 |                                   |
 —————————————————————————————————————
 Menu:
-序号     测试项目               |       快捷指令          |          说明
-1. Basic INFO   基础信息检查    |  ./nowtest info        |
-2. SpeedTEST    网络测速        |  ./nowtest speedtest   |
-3. RAM-TEST     内存测速       |  ./nowtest ramtest      | At least 256Mb memory is required 至少256Mb内存
-4. RAM-limit    内存极限测速    | ./nowtest ramlimit     |Prudent use 慎重使用
-5. Traceroute(CN)中国方向路由追踪| ./nowtest traceroute   | 
-6. Disk-Test    硬盘测试        | ./nowtest disk         |
+序号     测试项目               |       快捷指令             |          说明
+1. Basic INFO   基础信息检查    |  ./nowtest.sh info        |
+2. SpeedTEST    网络测速        |  ./nowtest.sh speedtest   |
+3. RAM-TEST     内存测速       |  ./nowtest.sh ramtest      | At least 256Mb memory is required 至少256Mb内存
+4. RAM-limit    内存极限测速    | ./nowtest.sh ramlimit     |Prudent use 慎重使用
+5. Traceroute(CN)中国方向路由追踪| ./nowtest.sh traceroute   | 
+6. Disk-Test    硬盘测试        | ./nowtest.sh disk         |
                                 |                        |
-9. Update       更新脚本        | ./nowtest update        |
+9. Update       更新脚本        | ./nowtest.sh update        |
 
 Type the serial number to select
 输入序号选择测试内容
+ $1
 ";
 
 echo $1
-if [[ $? == '1' ]]
+if [ ! $1 ]
 then
 read todo
 fi
-if [ $1 == 'info' ]
+if [[ $1 = 'info' ]]
 then
 todo='1'
 fi
-if [ $1 == 'speedtest' ]
+if [[ $1 = 'speedtest' ]]
 then
 todo='2'
 fi
-if [ $1 == 'ramtest' ]
+if [[ $1 = 'ramtest' ]]
 then
 todo='3'
 fi
-if [ $1 == 'ramlimit' ]
+if [[ $1 = 'ramlimit' ]]
 then
 todo='4'
 fi
-if [ $1 == 'traceroute' ]
+if [[ $1 = 'traceroute' ]]
 then
 todo='5'
 fi
-if [ $1 == 'disk' ]
+if [[ $1 = 'disk' ]]
 then
 todo='6'
 fi
-if [ $1 == 'update' ]
+if [[ $1 = 'update' ]]
 then
 todo='9'
 fi
 
-if [ $todo == '1' ]
+if [[ $todo = '1' ]]
 then
 cpuname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
 cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
@@ -408,7 +409,7 @@ ISP                        $isp
 "
 fi
 
-if [ $todo == '2' ]
+if [[ $todo = '2' ]]
 then
 
 #官方speedtest不支持单线程
@@ -464,14 +465,14 @@ speed_test '26850'
 cd ../
 fi
 
-if [ $todo == '3' ]
+if [[ $todo = '3' ]]
 then
 dd if=/dev/zero of=/dev/null bs=10M count=1024
 echo "以上即为内存速度(仅供估算参考)"
 echo "内存一般峰值速度 = 频率 *8 *通道数 如 1600mhz双通道为25.6GB/s"
 fi
 
-if [ $todo == '4' ]
+if [[ $todo = '4' ]]
 then
 echo "即将开始极限内存测试(超开检测)"
 echo "程序将通过写入随机数据占用内存来测试真实内存,每一次将写入256MB数据,直到服务器无法运行时所得即为真实内存"
@@ -482,7 +483,7 @@ echo "输入TEST(大写)进行测试。其他任意退出
 Enter TEST(uppercase) to TEST. Any other exit
 "
 read iftest
-if [ $iftest == 'TEST' ]
+if [[ $iftest = 'TEST' ]]
 then 
 ramtest='yes'
 ramtestnum=0
@@ -518,7 +519,7 @@ echo "程序已自动清理测试数据,如当前内存异常请尝试手动删�
 fi
 fi
 
-if [ $todo == '5' ]
+if [[ $todo = '5' ]]
 then
 echo "即将下载 BestTrace Form IPIP.net"
 echo "仅支持amd64架构。ARM架构请自行手动测试"
@@ -550,7 +551,7 @@ echo "北京移动";
 trace '221.183.94.25'
 fi
 
-if [ $todo == '6' ]
+if [[ $todo = '6' ]]
 then
 echo "请确保硬盘空间>=1GB,否则立即ctrl+c退出"
 sleep 2s
@@ -590,7 +591,7 @@ fi
 
 
 
-if [ $todo == '9' ]
+if [[ $todo = '9' ]]
 then
 nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
 echo "当前版本 $version  最新版本 $nversion 是否更新？"
