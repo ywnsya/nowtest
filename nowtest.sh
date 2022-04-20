@@ -495,7 +495,7 @@ speed_test '3633'
 speed_test '35722'
 speed_test '29071'
 
-speed_test '24447'
+speed_testm '24447'
 speed_test '39012'
 speed_test '13704'
 
