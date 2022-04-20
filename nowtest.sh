@@ -316,7 +316,7 @@ then
 $pkg -y install unzip
 fi
 
-version='1.0.4';
+version='1.0.5';
 nversion=$(curl https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/version)
 
 echo "
