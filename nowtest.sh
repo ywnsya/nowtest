@@ -2,9 +2,9 @@
 speed_test(){
 speedlog=''
 beee=1048576
-speedlog=$(./speedtest --no-pre-allocate --server $1 --csv --csv-delimiter Q)
+speedlog=$(./speedtest --no-pre-allocate --server $1 --csv --csv-delimiter ? )
 singlespeed=$(./speedtest --no-pre-allocate --single --no-download --server $1 --csv --csv-delimiter Q)
-name=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[2]}' )
+name=$(echo $speedlog |  awk '{split($1, arr, "?"); print arr[2]}' )
 download=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[7]}' )
 download=`echo "scale=2; $download/$beee" | bc`
 upload=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[8]}' )
@@ -14,6 +14,48 @@ singleupload=$(echo $singlespeed |  awk '{split($1, arr, "Q"); print arr[8]}' )
 singleupload=`echo "scale=2; $singleupload/$beee" | bc`
 printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$upload Mbps" "$download Mbps" "$singleupload Mbps" "$ping ms"
 }
+speed_test_o(){
+	if [[ $1 == '' ]]; then
+		./speedtesto -p no --accept-license > $speedLog 2>&1
+		is_upload=$(cat $speedLog | grep 'Upload')
+		result_speed=$(cat $speedLog | awk -F ' ' '/Result/{print $3}')
+		if [[ ${is_upload} ]]; then
+	        local REDownload=$(cat $speedLog | awk -F ' ' '/Download/{print $3}')
+	        local reupload=$(cat $speedLog | awk -F ' ' '/Upload/{print $3}')
+	        local relatency=$(cat $speedLog | awk -F ' ' '/Latency/{print $2}')
+
+	        temp=$(echo "$relatency" | awk -F '.' '{print $1}')
+        	if [[ ${temp} -gt 50 ]]; then
+            	relatency="(*)"${relatency}
+        	fi
+	        local nodeName=$2
+
+	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
+	        if [[ $(awk -v num1=${temp} -v num2=0 'BEGIN{print(num1>num2)?"1":"0"}') -eq 1 ]]; then
+	        	printf "%-22s %-18s %-18s %-12s \n" " ${nodeName}" "${reupload} Mbps" "${REDownload} Mbps" "${relatency} ms"
+	        fi
+		else
+	        local cerror="ERROR"
+		fi
+	else
+		./speedtesto -p no -s $1 --accept-license > $speedLog 2>&1
+		is_upload=$(cat $speedLog | grep 'Upload')
+		if [[ ${is_upload} ]]; then
+	        local REDownload=$(cat $speedLog | awk -F ' ' '/Download/{print $3}')
+	        local reupload=$(cat $speedLog | awk -F ' ' '/Upload/{print $3}')
+	        local relatency=$(cat $speedLog | awk -F ' ' '/Latency/{print $2}')
+	        local nodeName=$2
+
+	        temp=$(echo "${REDownload}" | awk -F ' ' '{print $1}')
+	        if [[ $(awk -v num1=${temp} -v num2=0 'BEGIN{print(num1>num2)?"1":"0"}') -eq 1 ]]; then
+	        	printf "%-22s %-18s %-18s %-12s \n" " ${nodeName}" "${reupload} Mbps" "${REDownload} Mbps" "${relatency} ms"
+			fi
+		else
+	        local cerror="ERROR"
+		fi
+	fi
+}
+
 trace(){
 route=''
 traceput=$( nowtest/besttrace -w 2 -m 15 $1 -T)
@@ -158,11 +200,6 @@ echo $traceput | grep AS21859  >/dev/null 2>&1
 if [ $? == '0' ]
 then
 route="$route \n AS21859   xTom KR  韩国xTom"
-fi
-echo $traceput | grep AS3786  >/dev/null 2>&1
-if [ $? == '0' ]
-then
-route="$route \n AS3786   LG-DACOM KR  韩国LG"
 fi
 echo $traceput | grep AS3786  >/dev/null 2>&1
 if [ $? == '0' ]
@@ -466,6 +503,29 @@ speed_test '27249'
 speed_test '17584'
 speed_test '26850'
 cd ../
+echo "测速已完成,五秒后开始官方Speedtest测速,如不需要请立即ctrl+c"
+echo "某些海外服务器由于不明原因，python版speedtest数据不正常，请参考官方版"
+sleep 5s
+echo "仅支持amd64，其他架构请自行测试"
+curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/amd/speedtest" -o nowtest/speedtesto
+cd nowtest
+chmod +x ./speedtesto
+clear
+echo "CT=中国电信 CU=中国联通 CM=中国移动"
+printf "%-22s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "延迟"
+speed_test_o '3633' 'CT Shanghai'
+speed_test_o '35722' 'CT Tianjin'
+speed_test_o '29071' 'CT Chendu'
+
+speed_test_o '24447' 'CU Shanghai 5G'
+speed_test_o '39012' 'CU Yunnan'
+speed_test_o '13704' 'CU Nanjing'
+
+speed_test_o '27249' 'CM Jiangsu'
+speed_test_o '17584' 'CM Chongqing'
+speed_test_o '26850' 'CM Wuxi 5G'
+
+
 fi
 
 if [[ $todo = '3' ]]
