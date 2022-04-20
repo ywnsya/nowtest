@@ -17,6 +17,7 @@ printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$upload Mbps" "$download Mbps"
 trace(){
 route=''
 traceput=$( nowtest/besttrace -w 2 -m 15 $1 -T)
+echo $traceput >> nowtest/trace.log
 echo $traceput | grep AS4134 >/dev/null 2>&1
 if [ $? == '0' ]
 then
@@ -298,8 +299,8 @@ Menu:
 3. RAM-TEST     内存测速       |  ./nowtest.sh ramtest      | At least 256Mb memory is required 至少256Mb内存
 4. RAM-limit    内存极限测速    | ./nowtest.sh ramlimit     |Prudent use 慎重使用
 5. Traceroute(CN)中国方向路由追踪| ./nowtest.sh traceroute   | 
-6. Disk-Test    硬盘测试        | ./nowtest.sh disk         |
-                                |                        |
+6. Disk-Test    硬盘测试        | ./nowtest.sh disk         | At least 1GB free disk space is required 至少1GB空余硬盘
+                                |                           |
 9. Update       更新脚本        | ./nowtest.sh update        |
 
 Type the serial number to select
@@ -448,9 +449,11 @@ cd nowtest
 chmod +x ./speedtest
 clear
 echo "本脚本将测试单线程上传,因此耗时较长,如服务器用于建站,则单线程上传最具有参考意义"
+echo "脚本使用了speedtest-cli-python并添加了--no-pre-allocate参数，非官方版"
+echo "上行宽带表现可能相差较大，但更贴近真实情况"
 echo "如出现urlopen error timed out为Speedtest.Net服务器抽风,请稍后再尝试运行"
 echo "CT=中国电信 CU=中国联通 CM=中国移动"
-printf "%-22s %-18s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "单线程上传" "延迟"
+printf "%-22s %-18s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "单线程上传" "延迟(TCP)"
 speed_test '3633'
 speed_test '35722'
 speed_test '29071'
@@ -459,7 +462,7 @@ speed_test '24447'
 speed_test '39012'
 speed_test '13704'
 
-speed_test '20249'
+speed_test '27249'
 speed_test '17584'
 speed_test '26850'
 cd ../
@@ -531,6 +534,7 @@ cd ../
 chmod +x nowtest/besttrace
 clear
 echo "全部使用TCP测试,AS库不全,只检测较有特色的骨干网,测试点来源于网络,不保证可用以及不保证是否包含国内CN2等优化线路"
+touch nowtest/trace.log
 echo "上海电信";
 trace '203.156.197.66'
 echo "广东电信";
@@ -549,6 +553,7 @@ echo "广东移动";
 trace '221.179.81.94'
 echo "北京移动";
 trace '221.183.94.25'
+echo "完整trace日志已保存在nowtest/trace.log"
 fi
 
 if [[ $todo = '6' ]]
