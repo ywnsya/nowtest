@@ -16,7 +16,7 @@ printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$upload Mbps" "$download Mbps"
 }
 speed_test_o(){
 	if [[ $1 == '' ]]; then
-		./speedtesto -p no --accept-license > $speedLog 2>&1
+		nowtest/speedtesto -p no --accept-license > $speedLog 2>&1
 		is_upload=$(cat $speedLog | grep 'Upload')
 		result_speed=$(cat $speedLog | awk -F ' ' '/Result/{print $3}')
 		if [[ ${is_upload} ]]; then
@@ -38,7 +38,7 @@ speed_test_o(){
 	        local cerror="ERROR"
 		fi
 	else
-		./speedtesto -p no -s $1 --accept-license > $speedLog 2>&1
+		nowtest/speedtesto -p no -s $1 --accept-license > $speedLog 2>&1
 		is_upload=$(cat $speedLog | grep 'Upload')
 		if [[ ${is_upload} ]]; then
 	        local REDownload=$(cat $speedLog | awk -F ' ' '/Download/{print $3}')
@@ -495,7 +495,7 @@ speed_test '3633'
 speed_test '35722'
 speed_test '29071'
 
-speed_testm '24447'
+speed_test '24447'
 speed_test '39012'
 speed_test '13704'
 
@@ -507,12 +507,17 @@ echo "测速已完成,五秒后开始官方Speedtest测速,如不需要请立即
 echo "某些海外服务器由于不明原因，python版speedtest数据不正常，请参考官方版"
 sleep 5s
 echo "仅支持amd64，其他架构请自行测试"
-curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/amd/speedtest" -o nowtest/speedtesto
+curl -L "https://laysense.coding.net/p/nowtest/d/nowtest/git/raw/master/speedtest-cli/amd64/speedtest" -o nowtest/speedtesto
 cd nowtest
 chmod +x ./speedtesto
+touch ./speedtest.log
+speedLog="nowtest/speedtest.log"
+cd ../
 clear
 echo "CT=中国电信 CU=中国联通 CM=中国移动"
 printf "%-22s %-18s %-18s %-12s\n" "服务器" "上传" "下载" "延迟"
+speed_test_o '' 'Speedtest.NET'
+
 speed_test_o '3633' 'CT Shanghai'
 speed_test_o '35722' 'CT Tianjin'
 speed_test_o '29071' 'CT Chendu'
