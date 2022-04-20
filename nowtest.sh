@@ -6,12 +6,12 @@ speedlog=$(./speedtest --no-pre-allocate --server $1 --csv --csv-delimiter Q)
 singlespeed=$(./speedtest --no-pre-allocate --single --no-download --server $1 --csv --csv-delimiter Q)
 name=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[2]}' )
 download=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[7]}' )
-download=$(echo "sclae=2; $download/$beee" | bc)
+download=`echo "scale=2; $download/$beee" | bc`
 upload=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[8]}' )
-upload=$(echo "sclae=2; $upload/$beee" | bc)
+upload=`echo "scale=2; $upload/$beee" | bc`
 ping=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[6]}' )
 singleupload=$(echo $singlespeed |  awk '{split($1, arr, "Q"); print arr[8]}' )
-singleupload=$(echo "sclae=2; $singleupload/$beee" | bc)
+singleupload=`echo "scale=2; $singleupload/$beee" | bc`
 printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$upload Mbps" "$download Mbps" "$singleupload Mbps" "$ping ms"
 }
 trace(){
