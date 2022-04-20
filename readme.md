@@ -1,7 +1,7 @@
 # NowTest 全面测试你的VPS  
 ### 一个专门测试面向中国用户的服务器的脚本  
 ### A script designed to test a server for Chinese  users  
-version: 1.0.4
+version: 1.0.5
 
 [Website](https://laysense.com/nowtest)  
 [Wiki](https://laysense.coding.net/s/8bf42616-c20a-4e7f-a726-4b1c5865049d)  
@@ -32,3 +32,8 @@ Use it 使用方式 :
 ```bash
  ./nowtest.sh
 ```
+
+兼容性?
+自动检查 yum或apt，暂不支持其他
+仅在Centos7.9 CentosStream8 Almalinux8.5下测试通过
+默认部分功能仅支持AMD64
