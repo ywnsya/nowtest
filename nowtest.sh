@@ -3,14 +3,14 @@ speed_test(){
 speedlog=''
 beee=1048576
 speedlog=$(./speedtest --no-pre-allocate --server $1 --csv --csv-delimiter ? )
-singlespeed=$(./speedtest --no-pre-allocate --single --no-download --server $1 --csv --csv-delimiter Q)
+singlespeed=$(./speedtest --no-pre-allocate --single --no-download --server $1 --csv --csv-delimiter ?)
 name=$(echo $speedlog |  awk '{split($1, arr, "?"); print arr[2]}' )
-download=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[7]}' )
+download=$(echo $speedlog |  awk '{split($1, arr, "?"); print arr[7]}' )
 download=`echo "scale=2; $download/$beee" | bc`
-upload=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[8]}' )
+upload=$(echo $speedlog |  awk '{split($1, arr, "?"); print arr[8]}' )
 upload=`echo "scale=2; $upload/$beee" | bc`
-ping=$(echo $speedlog |  awk '{split($1, arr, "Q"); print arr[6]}' )
-singleupload=$(echo $singlespeed |  awk '{split($1, arr, "Q"); print arr[8]}' )
+ping=$(echo $speedlog |  awk '{split($1, arr, "?"); print arr[6]}' )
+singleupload=$(echo $singlespeed |  awk '{split($1, arr, "?"); print arr[8]}' )
 singleupload=`echo "scale=2; $singleupload/$beee" | bc`
 printf "%-18s %-18s %-18s %-18s %-12s\n" "$name" "$upload Mbps" "$download Mbps" "$singleupload Mbps" "$ping ms"
 }
