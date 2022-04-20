@@ -629,7 +629,7 @@ echo "512K,1GB顺序写测速(0填充)"
 dd if=/dev/zero of=test_file bs=512K count=2048 oflag=sync oflag=direct
 echo "清除缓存"
 sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
-echo "512K,1GB顺序写测速(0填充)"
+echo "512K,1GB顺序读测速(0填充)"
 dd if=./test_file of=/dev/null bs=512k
 rm -f ./test_file
 sleep 2s
@@ -639,7 +639,7 @@ echo "512K,1GB顺序写测速(urandom填充)"
 dd if=/dev/urandom of=test_file bs=512K count=2048 oflag=sync oflag=direct
 echo "清除缓存"
 sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
-echo "512K,1GB顺序写测速(urandom填充)"
+echo "512K,1GB顺序读测速(urandom填充)"
 dd if=./test_file of=/dev/null bs=512k
 rm -f ./test_file
 
@@ -650,7 +650,7 @@ echo "4K,50MB顺序写测速(urandom填充) 【共计12800次IO,您可以更具�
 time dd if=/dev/urandom of=test_file bs=4K count=12800 oflag=sync oflag=direct
 echo "清除缓存"
 sh -c "sync && echo 3 > /proc/sys/vm/drop_caches"
-echo "4K,50MB顺序写测速(urandom填充)"
+echo "4K,50MB顺序读测速(urandom填充)"
 time dd if=./test_file of=/dev/null bs=4K
 rm -f ./test_file
 
